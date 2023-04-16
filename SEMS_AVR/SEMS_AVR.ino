@@ -1,3 +1,9 @@
+//Duong Doan Tung 21010294
+
+//Project completion rate:
+// Arduino: 100%
+// RPI: 70%
+
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 //#define SERIAL_DEBUG
@@ -22,7 +28,7 @@ float DELAY_TIME = 1;
 volatile uint32_t preloader = 57722;
 volatile bool update = false;
 static int speed = 0;
-static int doorOpenTime = 10000;
+static int doorOpenTime = 60000;
 static int doorHeight = 200; // Step take to open the door
 volatile int doorStep = 0; // Current step of the door
 int last_value = 0;
@@ -36,6 +42,8 @@ enum Mode { WAVE = 0, FULL = 1, HALF = 2 };
 volatile uint8_t calibrate_count = 0; //0 is not calibrating, 1 is closing, 2 is opening
 volatile bool calibrating = false;
 volatile unsigned long access_session_start_time = 0;
+const uint16_t serial_check_routine = 1;
+long last_serial_check_time = 0;
 
 const uint8_t STAGES[3][8] = {
 	//wave stages
@@ -253,9 +261,9 @@ cont:
 		closeDoor();
 		break;
 	case FACE_DETECTED:
-		if (value == "1")
+		if (value.charAt(0) == 'D')
 			digitalWrite(FACE_LED, HIGH);
-		else
+		else if (value.charAt(0) == 'U')
 			digitalWrite(FACE_LED, LOW);
 		break;
 	case SET_ACCESS_TIME:
@@ -348,11 +356,11 @@ void loop() {
 		sendKey(key);
 		getCommand();
 	}
-	//check if time expried
+
 	if (doorState == DOOR_OPEN && millis() - access_session_start_time > doorOpenTime) {
 		closeDoor();
 	}
-	else if (doorState == DOOR_OPEN && millis() - access_session_start_time > doorOpenTime / 2 && (millis() - access_session_start_time) / 100 % 10 == 0)
+	else if (doorState == DOOR_OPEN && millis() - access_session_start_time > (doorOpenTime * 0.2) && (millis() - access_session_start_time) / 100 % 10 == 0)
 	{
 		lcd.clear();
 		lcd.setCursor(0, 0);
@@ -384,5 +392,14 @@ void loop() {
 		}
 		digitalWrite(DOOR_LED, LOW);
 		PORTC = (PORTC & 0b110000) | (0);
+	}
+	if (millis() - last_serial_check_time > serial_check_routine)
+	{
+		last_serial_check_time = millis();
+		String tosend = "";
+		tosend += (char)END;
+		tosend += '\n';
+		Serial.print(tosend);
+		getCommand();
 	}
 }

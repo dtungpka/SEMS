@@ -1,4 +1,5 @@
 #import serial lib, open com8
+from statistics import variance
 import serial
 import face_recognition
 import cv2
@@ -136,17 +137,25 @@ data = {
     }
 
 
-last_cursor = [-1,-1,-1]
-cursor = [-1,-1,-1]
 ADMIN_PANEL = {
+    'SEMS Admin panel':'',
     'Password':['Add','Change','Delete','Back'],
     'Face Data':['Add','Delete','Back'],
     'Access Time':['Change','Back'],
     'Speed':['Change','Back'],
     'Open Time':['Change','Back'],
-    'Calibrating Value':['Run'],
+    'Calibrate':['Run'],
     'Show password':['On/Off'],
     'Exit':['Exit']
+    }
+PANEL_COMMANDS = {
+    'Password':'PASSWORD',
+    'Face Data':'FACE_DATA',
+    'Access Time':'ACCESS_TIME',
+    'Speed':'SPEED',
+    'Open Time':'OPENTIME',
+    'Calibrate':'CALIBRATING_VALUE',
+    'Show password':'SHOW_PASSWORD'
     }
 ser = SerialCom()
 lock = threading.Lock()
@@ -206,40 +215,117 @@ class Password():
         return False
 class AdminPanel:
     authorized = False
-    def __init__(self) -> None:
-        pass
+    def __init__(self,panel,parent:str,serial,optional_action=None) -> None:
+        self.cursor = 0
+        self.panel = panel #if not select: Add, Change, Delete,...
+        self.parent = parent #Password,..
+        self.keys = list(panel)
+        self.ser = serial
+        self.value = ''
+        self.optional_action = optional_action
+        self.OoF = False # Out of focus
+        self.return_focus = False
+        self.subPanel = None
+        self.is_selects_panel = type(panel) != str
+            
     def handle_key(self,key):
-        pass
-    def render_panel(self):
-        if cursor[0] == -1:
-            ser.send(parse_command('DISPLAY_MESSAGE','Welcome to\nSEMS Admin Panel'))
+        if self.OoF and self.subPanel != None:
+            self.subPanel.handle_key(key)
+            self.OoF = self.subPanel.check_focus_scope()
+            if self.OoF == False and self.is_selects_panel:
+                self.render()
             return
-        if cursor[1] == -1 and cursor[2] == -1:
-            n = list(ADMIN_PANEL.keys())
-            #if cursor is out of range
-            if cursor[0] >= len(n):
-                cursor[0] = len(n)-1
-            #display > on the cursor position and ' ' on the rest (display 2 line max)
-            for i in range(len(n)):
-                n[i] = '>' + n[i] if i == cursor[0] else ' ' + n[i]
-            if cursor[0] % 2 == 0:
-                ser.send(parse_command('DISPLAY_MESSAGE',n[cursor[0]]+'\n'+n[cursor[0]+1]))
+        if key == 'A':
+            self.move_up()
+        elif key == 'C':
+            self.move_down()
+        elif key == 'B':
+            self.select()
+        elif key == 'D':
+            self.back()
+        elif key != '*' and key != '#' and not self.is_selects_panel:
+            self.modify(key)
+    def select(self):
+        if self.is_selects_panel:
+            if self.keys[self.cursor] == 'Back':
+                self.back()
+            if self.keys[self.cursor] == 'Exit':
+                self.exit()
+            elif type(self.panel) == dict:
+                self.subPanel = AdminPanel(self.panel[self.keys[self.cursor]],self.keys[self.cursor],self.ser)
+                self.subPanel.render()
+                self.OoF = True
+            elif type(self.panel) == list:
+                self.subPanel = AdminPanel(self.panel[self.cursor],self.parent,self.ser)
+                self.subPanel.render()
+                self.OoF = True
+        else:
+            # self.subPanel = AdminPanel(self.value,self.parent,self.ser,self.panel)
+            pass
+    def back(self):
+        self.return_focus = True
+    def move_up(self):
+        if self.cursor == 0 or not self.is_selects_panel:
+            return
+        self.cursor -= 1
+        self.render()
+    def move_down(self):
+        if not self.is_selects_panel:
+            return
+        if self.cursor == len(self.panel) -1:
+            self.cursor = 0
+        else:
+            self.cursor += 1
+        self.render()
+    def render(self):
+        if not self.is_selects_panel:
+            self.modify()
+            return
+        start_position = self.cursor if self.cursor % 2 == 0 else self.cursor - 1
+        render_text = ''
+        for i in range(start_position,start_position+2):
+            if i >= len(self.panel):
+                break
+            if self.panel[self.get_key_from_cursor(i)] != '':
+                if i == self.cursor:
+                    render_text += '>'
+                else:
+                    render_text += ' '
+            if  type(self.panel) == list:
+                render_text += self.panel[i] + ('\n' if len(self.panel[i]) < 16 else '')
             else:
-                ser.send(parse_command('DISPLAY_MESSAGE',n[cursor[0]-1]+'\n'+n[cursor[0]]))
-            return
-        if cursor[2] == -1:
-            n = ADMIN_PANEL[list(ADMIN_PANEL.keys())[cursor[0]]]
-            #if cursor is out of range
-            if cursor[1] >= len(n):
-                cursor[1] = len(n)-1
-            #display > on the cursor position and ' ' on the rest (display 2 line max)
-            for i in range(len(n)):
-                n[i] = '>' + n[i] if i == cursor[1] else ' ' + n[i]
-            if cursor[1] % 2 == 0:
-                ser.send(parse_command('DISPLAY_MESSAGE',n[cursor[1]]+'\n'+n[cursor[1]+1]))
-            else:
-                ser.send(parse_command('DISPLAY_MESSAGE',n[cursor[1]-1]+'\n'+n[cursor[1]]))
-            return
+                render_text += self.get_key_from_cursor(i) + ('\n' if len(self.get_key_from_cursor(i)) < 16 else '')
+            self.ser.send(parse_command('DISPLAY_MESSAGE',render_text))
+            self.ser.send(parse_command('END'))
+    def get_key_from_cursor(self,cursor):
+        if type(self.panel) == list:
+            return cursor
+        return self.keys[cursor]
+    def exit(self):
+        AdminPanel.authorized = False
+        self.return_focus = True
+    def modify(self,key=None):
+        global PANEL_COMMANDS,data
+        if self.panel == 'Delete':
+            self.value = 'Yes[B]/No[D]?'
+        if self.panel == 'Change' and self.value == '':
+            self.value = data[PANEL_COMMANDS[self.parent]]
+                
+        
+            
+
+
+
+            
+
+
+
+
+        render_text = f'{self.panel} {self.parent}:\n{self.value}'
+        self.ser.send(parse_command('DISPLAY_MESSAGE',render_text))
+        self.ser.send(parse_command('END'))
+    def check_focus_scope(self):
+        return not self.return_focus
            
         
 
@@ -247,7 +333,7 @@ class AdminPanel:
   
 def serial_handler():
     password = Password()
-    admin_panel = AdminPanel()
+    admin_panel = AdminPanel(ADMIN_PANEL,"",ser)
     update_face = 0
     while True:
         msg = ser.read()
@@ -273,16 +359,19 @@ def serial_handler():
                     ser.send(parse_command('END'))
                 if password.check_admin_password():
                     AdminPanel.authorized = True
-                    cursor[0] = -1
-                    cursor[1] = -1
-                    cursor[2] = -1
-                    admin_panel.render_panel()
+                    admin_panel.render()
+                    #admin_panel.render_panel()
             else:
-                if value == 'B':
-                    ser.send(parse_command('DISPLAY_MESSAGE','Capturing image'))
-                    ser.send(parse_command('END'))
-                    Recognition.take = True
+                #if value == 'B':
+                #    ser.send(parse_command('DISPLAY_MESSAGE','Capturing image'))
+                #    ser.send(parse_command('END'))
+                #    Recognition.take = True
                 admin_panel.handle_key(value)
+                if AdminPanel.authorized == False:
+                    ser.send(parse_command('DISPLAY_MESSAGE','Setting saved'))
+                    password.clear_password()
+                    time.sleep(2)
+                    password.display_password()
         if command == COMMANDS['END']:
             if (Recognition.detected > 0 and update_face != Recognition.detected) or len(Recognition.authorized) > 0:
                 update_face = Recognition.detected

@@ -360,7 +360,7 @@ void loop() {
 	if (doorState == DOOR_OPEN && millis() - access_session_start_time > doorOpenTime) {
 		closeDoor();
 	}
-	else if (doorState == DOOR_OPEN && millis() - access_session_start_time > (doorOpenTime * 0.2) && (millis() - access_session_start_time) / 100 % 10 == 0)
+	else if (doorState == DOOR_OPEN && millis() - access_session_start_time > (doorOpenTime / 2) && (millis() - access_session_start_time) / 100 % 10 == 0)
 	{
 		lcd.clear();
 		lcd.setCursor(0, 0);

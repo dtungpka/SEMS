@@ -1,0 +1,265 @@
+13:38:34: INFO Loading face data 
+13:38:34: INFO Face data loaded 
+13:38:34: INFO Loading config 
+13:38:34: INFO Config loaded 
+13:38:34: INFO Sending config to arduino 
+13:38:34: INFO Sent: A60000 
+13:38:34: INFO Sent: E52431 
+13:38:34: INFO Sent: T20000 
+13:38:34: INFO Sent: V600 
+13:38:34: INFO Config sent 
+13:38:34: INFO Received:  V600 
+13:38:43: INFO Received:  K0 
+13:38:45: INFO Received:  K3 
+13:38:45: INFO Received:  K0 
+13:38:45: INFO Received:  K1 
+13:38:45: INFO Sent: DEnter password: **** 
+13:38:46: INFO Received:  K0 
+13:38:46: INFO Sent: DEnter password: ***** 
+13:38:46: INFO Received:  K1 
+13:38:46: INFO Sent: DEnter password: ****** 
+13:38:46: INFO Received:  K1 
+13:38:46: INFO Sent: DEnter password: ******* 
+13:38:46: INFO Sent: DSEMS Admin panel 
+13:38:46: INFO Sent: DSEMS Admin panel Password 
+13:38:49: INFO Received:  KC 
+13:38:49: INFO Sent: DSEMS Admin panel 
+13:38:49: INFO Sent: DSEMS Admin panel>Password 
+13:38:49: INFO Received:  KC 
+13:38:49: INFO Sent: D>Face Data       
+13:38:50: INFO Sent: D>Face Data       Access Time 
+13:38:51: INFO Received:  KC 
+13:38:51: INFO Sent: D Face Data       
+13:38:51: INFO Sent: D Face Data      >Access Time 
+13:38:51: INFO Received:  KC 
+13:38:51: INFO Sent: D>Speed           
+13:38:51: INFO Sent: D>Speed           Open Time 
+13:38:52: INFO Received:  KC 
+13:38:52: INFO Sent: D Speed           
+13:38:52: INFO Sent: D Speed          >Open Time 
+13:38:52: INFO Received:  KC 
+13:38:52: INFO Sent: D>Calibrate       
+13:38:52: INFO Sent: D>Calibrate       Show password 
+13:38:53: INFO Received:  KC 
+13:38:53: INFO Sent: D Calibrate       
+13:38:53: INFO Sent: D Calibrate      >Show password 
+13:38:54: INFO Received:  KB 
+13:38:54: INFO Sent: D>On/Off          
+13:38:54: INFO Sent: D>On/Off          Back 
+13:38:55: INFO Received:  KB 
+13:38:55: INFO Sent: DShow password   set to On 
+13:38:57: INFO Received:  KB 
+13:38:57: INFO Sent: DOn/Off Show password: 
+13:38:57: INFO Sent: D>On/Off          
+13:38:57: INFO Sent: D>On/Off          Back 
+13:38:58: INFO Received:  KC 
+13:38:58: INFO Sent: D On/Off          
+13:38:58: INFO Sent: D On/Off         >Back 
+13:38:58: INFO Received:  KB 
+13:38:58: INFO Sent: DBack Show password: 
+13:38:58: INFO Sent: D Calibrate       
+13:38:58: INFO Sent: D Calibrate      >Show password 
+13:38:59: INFO Received:  KC 
+13:38:59: INFO Sent: D>Exit            
+13:39:00: INFO Received:  KC 
+13:39:00: INFO Sent: DSEMS Admin panel 
+13:39:00: INFO Sent: DSEMS Admin panel Password 
+13:39:01: INFO Received:  KC 
+13:39:01: INFO Sent: DSEMS Admin panel 
+13:39:01: INFO Sent: DSEMS Admin panel>Password 
+13:39:02: INFO Received:  KB 
+13:39:02: INFO Sent: D>Add             
+13:39:02: INFO Sent: D>Add             Change 
+13:39:08: INFO Received:  KD 
+13:39:08: INFO Sent: DSEMS Admin panel 
+13:39:08: INFO Sent: DSEMS Admin panel>Password 
+13:39:10: INFO Received:  KC 
+13:39:10: INFO Sent: D>Face Data       
+13:39:10: INFO Sent: D>Face Data       Access Time 
+13:39:10: INFO Received:  KC 
+13:39:10: INFO Sent: D Face Data       
+13:39:10: INFO Sent: D Face Data      >Access Time 
+13:39:11: INFO Received:  KC 
+13:39:11: INFO Sent: D>Speed           
+13:39:11: INFO Sent: D>Speed           Open Time 
+13:39:12: INFO Received:  KC 
+13:39:12: INFO Sent: D Speed           
+13:39:12: INFO Sent: D Speed          >Open Time 
+13:39:12: INFO Received:  KC 
+13:39:12: INFO Sent: D>Calibrate       
+13:39:12: INFO Sent: D>Calibrate       Show password 
+13:39:13: INFO Received:  KC 
+13:39:13: INFO Sent: D Calibrate       
+13:39:13: INFO Sent: D Calibrate      >Show password 
+13:39:13: INFO Received:  KC 
+13:39:13: INFO Sent: D>Exit            
+13:39:14: INFO Received:  KB 
+13:39:14: INFO Sent: DSetting saved 
+13:39:18: INFO Received:  K0 
+13:39:19: INFO Received:  K1 
+13:39:19: INFO Received:  K0 
+13:39:20: INFO Received:  K3 
+13:39:20: INFO Sent: DEnter password: 0103 
+13:39:20: INFO Sent: DWrong password 
+13:39:23: INFO Received:  K0 
+13:39:23: INFO Received:  K1 
+13:39:24: INFO Received:  K0 
+13:39:24: INFO Received:  K3 
+13:39:24: INFO Sent: DEnter password: 0103 
+13:39:24: INFO Sent: DWrong password 
+13:39:27: INFO Received:  K0 
+13:39:27: INFO Received:  K3 
+13:39:28: INFO Received:  K0 
+13:39:28: INFO Received:  K1 
+13:39:28: INFO Sent: DEnter password: 0301 
+13:39:29: INFO Received:  K0 
+13:39:29: INFO Sent: DEnter password: 03010 
+13:39:29: INFO Received:  K1 
+13:39:29: INFO Sent: DEnter password: 030101 
+13:39:29: INFO Received:  K1 
+13:39:29: INFO Sent: DEnter password: 0301011 
+13:39:29: INFO Sent: DSEMS Admin panel 
+13:39:29: INFO Sent: DSEMS Admin panel Password 
+13:39:31: INFO Received:  KC 
+13:39:31: INFO Sent: DSEMS Admin panel 
+13:39:31: INFO Sent: DSEMS Admin panel>Password 
+13:39:31: INFO Received:  KB 
+13:39:31: INFO Sent: D>Add             
+13:39:31: INFO Sent: D>Add             Change 
+13:39:32: INFO Received:  KB 
+13:39:32: INFO Sent: DAdd Password:    
+13:39:40: INFO Received:  K1 
+13:39:40: INFO Sent: DAdd Password:   1 
+13:39:41: INFO Received:  K2 
+13:39:41: INFO Sent: DAdd Password:   12 
+13:39:42: INFO Received:  K3 
+13:39:42: INFO Sent: DAdd Password:   123 
+13:39:43: INFO Received:  K4 
+13:39:43: INFO Sent: DAdd Password:   1234 
+13:39:46: INFO Received:  KB 
+13:39:46: INFO Password Saved 
+13:39:46: INFO Sent: DAdd Password:   1234 
+13:39:46: INFO Sent: D>Add             
+13:39:46: INFO Sent: D>Add             Change 
+13:39:52: INFO Received:  KD 
+13:39:52: INFO Sent: DSEMS Admin panel 
+13:39:52: INFO Sent: DSEMS Admin panel>Password 
+13:39:53: INFO Received:  KC 
+13:39:53: INFO Sent: D>Face Data       
+13:39:53: INFO Sent: D>Face Data       Access Time 
+13:39:54: INFO Received:  KC 
+13:39:54: INFO Sent: D Face Data       
+13:39:54: INFO Sent: D Face Data      >Access Time 
+13:39:54: INFO Received:  KC 
+13:39:54: INFO Sent: D>Speed           
+13:39:54: INFO Sent: D>Speed           Open Time 
+13:39:55: INFO Received:  KC 
+13:39:55: INFO Sent: D Speed           
+13:39:55: INFO Sent: D Speed          >Open Time 
+13:39:55: INFO Received:  KC 
+13:39:55: INFO Sent: D>Calibrate       
+13:39:55: INFO Sent: D>Calibrate       Show password 
+13:39:57: INFO Received:  KC 
+13:39:57: INFO Sent: D Calibrate       
+13:39:57: INFO Sent: D Calibrate      >Show password 
+13:39:57: INFO Received:  KC 
+13:39:57: INFO Sent: D>Exit            
+13:39:58: INFO Received:  KC 
+13:39:58: INFO Sent: DSEMS Admin panel 
+13:39:58: INFO Sent: DSEMS Admin panel Password 
+13:39:59: INFO Received:  KC 
+13:39:59: INFO Sent: DSEMS Admin panel 
+13:39:59: INFO Sent: DSEMS Admin panel>Password 
+13:40:00: INFO Received:  KC 
+13:40:00: INFO Sent: D>Face Data       
+13:40:00: INFO Sent: D>Face Data       Access Time 
+13:40:00: INFO Received:  KC 
+13:40:00: INFO Sent: D Face Data       
+13:40:00: INFO Sent: D Face Data      >Access Time 
+13:40:01: INFO Received:  KC 
+13:40:01: INFO Sent: D>Speed           
+13:40:01: INFO Sent: D>Speed           Open Time 
+13:40:01: INFO Received:  KC 
+13:40:01: INFO Sent: D Speed           
+13:40:01: INFO Sent: D Speed          >Open Time 
+13:40:02: INFO Received:  KC 
+13:40:02: INFO Sent: D>Calibrate       
+13:40:02: INFO Sent: D>Calibrate       Show password 
+13:40:02: INFO Received:  KC 
+13:40:02: INFO Sent: D Calibrate       
+13:40:02: INFO Sent: D Calibrate      >Show password 
+13:40:03: INFO Received:  KC 
+13:40:03: INFO Sent: D>Exit            
+13:40:03: INFO Received:  KC 
+13:40:03: INFO Sent: DSEMS Admin panel 
+13:40:03: INFO Sent: DSEMS Admin panel Password 
+13:40:04: INFO Received:  KC 
+13:40:04: INFO Sent: DSEMS Admin panel 
+13:40:04: INFO Sent: DSEMS Admin panel>Password 
+13:40:05: INFO Received:  KC 
+13:40:05: INFO Sent: D>Face Data       
+13:40:05: INFO Sent: D>Face Data       Access Time 
+13:40:05: INFO Received:  KD 
+13:40:07: INFO Received:  KC 
+13:40:07: INFO Sent: D Face Data       
+13:40:07: INFO Sent: D Face Data      >Access Time 
+13:40:07: INFO Received:  KC 
+13:40:07: INFO Sent: D>Speed           
+13:40:07: INFO Sent: D>Speed           Open Time 
+13:40:08: INFO Received:  KC 
+13:40:08: INFO Sent: D Speed           
+13:40:08: INFO Sent: D Speed          >Open Time 
+13:40:08: INFO Received:  KC 
+13:40:08: INFO Sent: D>Calibrate       
+13:40:08: INFO Sent: D>Calibrate       Show password 
+13:40:09: INFO Received:  KC 
+13:40:09: INFO Sent: D Calibrate       
+13:40:09: INFO Sent: D Calibrate      >Show password 
+13:40:10: INFO Received:  KC 
+13:40:10: INFO Sent: D>Exit            
+13:40:11: INFO Received:  KC 
+13:40:11: INFO Sent: DSEMS Admin panel 
+13:40:11: INFO Sent: DSEMS Admin panel Password 
+13:40:12: INFO Received:  KC 
+13:40:12: INFO Sent: DSEMS Admin panel 
+13:40:12: INFO Sent: DSEMS Admin panel>Password 
+13:40:13: INFO Received:  KC 
+13:40:13: INFO Sent: D>Face Data       
+13:40:13: INFO Sent: D>Face Data       Access Time 
+13:40:14: INFO Received:  KC 
+13:40:14: INFO Sent: D Face Data       
+13:40:14: INFO Sent: D Face Data      >Access Time 
+13:40:15: INFO Received:  KC 
+13:40:15: INFO Sent: D>Speed           
+13:40:15: INFO Sent: D>Speed           Open Time 
+13:40:16: INFO Received:  KC 
+13:40:16: INFO Sent: D Speed           
+13:40:16: INFO Sent: D Speed          >Open Time 
+13:40:17: INFO Received:  KC 
+13:40:17: INFO Sent: D>Calibrate       
+13:40:17: INFO Sent: D>Calibrate       Show password 
+13:40:18: INFO Received:  KC 
+13:40:18: INFO Sent: D Calibrate       
+13:40:18: INFO Sent: D Calibrate      >Show password 
+13:40:18: INFO Received:  KC 
+13:40:18: INFO Sent: D>Exit            
+13:40:22: INFO Received:  KA 
+13:40:22: INFO Sent: D Calibrate       
+13:40:22: INFO Sent: D Calibrate      >Show password 
+13:40:23: INFO Received:  KC 
+13:40:23: INFO Sent: D>Exit            
+13:40:26: INFO Received:  KB 
+13:40:26: INFO Sent: DSetting saved 
+13:40:44: INFO Received:  K1 
+13:40:46: INFO Received:  K1 
+13:40:48: INFO Received:  KC 
+13:40:49: INFO Received:  K1 
+13:40:50: INFO Received:  KC 
+13:40:51: INFO Received:  KD 
+13:40:52: INFO Received:  KD 
+13:40:52: INFO Received:  KD 
+13:40:53: INFO Received:  KD 
+13:40:54: INFO Received:  KD 
+13:40:55: INFO Received:  KD 
+13:40:57: INFO Received:  KD 
+13:41:01: INFO Received:  KD 

@@ -1,0 +1,21 @@
+13:46:16: INFO Loading face data 
+13:46:16: INFO Face data loaded 
+13:46:16: INFO Loading config 
+13:46:16: INFO Config loaded 
+13:46:16: INFO Sending config to arduino 
+13:46:16: INFO Sent: A60000                          |  32 
+13:46:16: INFO Sent: E52431                          |  32 
+13:46:16: INFO Sent: T20000                          |  32 
+13:46:16: INFO Sent: V600                            |  32 
+13:46:16: INFO Config sent 
+13:46:17: INFO Received:  V600 
+13:46:17: INFO Received:  V600 
+13:46:43: INFO Received:  K2 
+13:46:44: INFO Received:  K2 
+13:46:45: INFO Received:  K2 
+13:46:45: INFO Received:  K2 
+13:46:45: INFO Sent: DEnter password: ****           |  32 
+13:46:45: INFO Sent: DWrong password                 |  32 
+13:46:48: INFO Received:  K2 
+13:46:48: INFO Received:  K2 
+13:46:50: INFO Received:  K2 

@@ -62,7 +62,7 @@ def get_preloader(value):
     value = max(min(99,100 - int(value) ),2)
     DELAY_TIME = max((int(value) / 100 * 32.76) / 1000, 0.001);
     preloader = 65535 - (16000000 * DELAY_TIME / 8)
-    return str(preloader)
+    return str(int(preloader))
 
 ports = list(serial.tools.list_ports.comports())
 if not ports:
@@ -85,11 +85,19 @@ class SerialCom():
         #if msg is empty
         if not msg:
             return
+        msg = msg.replace('\n','')
+        if len(msg) > 32:
+            msg = msg[:32]
+        else:
+            msg+= ' '*(32 - len(msg))
         #check if msg have \n or not, if not add it
+        if '_' not in msg:
+            Console.Log("Sent:",msg+'| ',len(msg))
         if msg[-1] != '\n':
             msg += '\n'
-        self.ser.write(msg.encode())
-        self.ser.flush()
+        self.ser.write(msg.encode(encoding="ascii"))
+        self.ser.flushOutput()
+        
     def read(self):
         try:
             l = self.ser.readline().decode('ascii').rstrip()
@@ -136,10 +144,10 @@ COMMANDS = {
     'GET_CALIBRATING_VALUE':'S'
     }
 data = {
-    'CALIBRATING_VALUE':'1000',
+    'CALIBRATING_VALUE':'600',
     'ACCESS_TIME':'60000',
-    'SPEED':'50',
-    'OPENTIME':'60000',
+    'SPEED':'80',
+    'OPENTIME':'20000',
     'PASSWORD':[ '1234'],
     'ADMIN_PASSWORD':'0301011',
     'FACE_DATA':[], #id, encoding
@@ -369,7 +377,7 @@ class AdminPanel:
                     Console.Log(self.parent,'Saved')
                     self.back()
                     save_setting()
-            elif self.panel == 'Start':
+            elif self.panel == 'Start' and key ==None:
                 self.ser.send(parse_command('CALIBRATING'))
                 self.ser.send(parse_command('GET_CALIBRATING_VALUE'))
                 self.back()

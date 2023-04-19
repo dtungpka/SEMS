@@ -1,0 +1,7 @@
+13:16:41: INFO Loading face data 
+13:16:41: INFO Face data loaded 
+13:16:41: INFO Loading config 
+13:16:41: INFO Config loaded 
+13:16:41: INFO Sending config to arduino 
+13:16:41: INFO Config sent 
+13:16:41: INFO Received:  V1000 

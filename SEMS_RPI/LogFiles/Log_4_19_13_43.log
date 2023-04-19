@@ -1,0 +1,118 @@
+13:43:41: INFO Loading face data 
+13:43:41: INFO Face data loaded 
+13:43:41: INFO Loading config 
+13:43:41: INFO Config loaded 
+13:43:41: INFO Sending config to arduino 
+13:43:41: INFO Sent: A60000                          |  32 
+13:43:41: INFO Sent: E52431                          |  32 
+13:43:41: INFO Sent: T20000                          |  32 
+13:43:41: INFO Sent: V600                            |  32 
+13:43:41: INFO Config sent 
+13:43:41: INFO Received:  V600 
+13:43:44: INFO Received:  K0 
+13:43:44: INFO Received:  K3 
+13:43:45: INFO Received:  K0 
+13:43:45: INFO Received:  K1 
+13:43:45: INFO Sent: DEnter password: 0301           |  32 
+13:43:46: INFO Received:  K0 
+13:43:46: INFO Sent: DEnter password: 03010          |  32 
+13:43:46: INFO Received:  K1 
+13:43:46: INFO Sent: DEnter password: 030101         |  32 
+13:43:47: INFO Received:  K1 
+13:43:47: INFO Sent: DEnter password: 0301011        |  32 
+13:43:47: INFO Sent: DSEMS Admin panel               |  32 
+13:43:47: INFO Sent: DSEMS Admin panel Password      |  32 
+13:43:49: INFO Received:  KC 
+13:43:49: INFO Sent: DSEMS Admin panel               |  32 
+13:43:49: INFO Sent: DSEMS Admin panel>Password      |  32 
+13:43:50: INFO Received:  KB 
+13:43:50: INFO Sent: D>Add                           |  32 
+13:43:50: INFO Sent: D>Add             Change        |  32 
+13:43:51: INFO Received:  KB 
+13:43:51: INFO Sent: DAdd Password:                  |  32 
+13:44:05: INFO Received:  K5 
+13:44:05: INFO Sent: DAdd Password:   5              |  32 
+13:44:06: INFO Received:  K5 
+13:44:06: INFO Sent: DAdd Password:   55             |  32 
+13:44:06: INFO Received:  K5 
+13:44:06: INFO Sent: DAdd Password:   555            |  32 
+13:44:06: INFO Received:  K5 
+13:44:06: INFO Sent: DAdd Password:   5555           |  32 
+13:44:09: INFO Received:  KB 
+13:44:09: INFO Password Saved 
+13:44:09: INFO Sent: DAdd Password:   5555           |  32 
+13:44:09: INFO Sent: D>Add                           |  32 
+13:44:09: INFO Sent: D>Add             Change        |  32 
+13:44:11: INFO Received:  KD 
+13:44:11: INFO Sent: DSEMS Admin panel               |  32 
+13:44:11: INFO Sent: DSEMS Admin panel>Password      |  32 
+13:44:12: INFO Received:  KC 
+13:44:12: INFO Sent: D>Face Data                     |  32 
+13:44:12: INFO Sent: D>Face Data       Access Time   |  32 
+13:44:13: INFO Received:  KC 
+13:44:13: INFO Sent: D Face Data                     |  32 
+13:44:13: INFO Sent: D Face Data      >Access Time   |  32 
+13:44:13: INFO Received:  KC 
+13:44:13: INFO Sent: D>Speed                         |  32 
+13:44:13: INFO Sent: D>Speed           Open Time     |  32 
+13:44:13: INFO Received:  KC 
+13:44:13: INFO Sent: D Speed                         |  32 
+13:44:14: INFO Sent: D Speed          >Open Time     |  32 
+13:44:14: INFO Received:  KC 
+13:44:14: INFO Sent: D>Calibrate                     |  32 
+13:44:14: INFO Sent: D>Calibrate       Show password |  32 
+13:44:17: INFO Received:  KC 
+13:44:17: INFO Sent: D Calibrate                     |  32 
+13:44:17: INFO Sent: D Calibrate      >Show password |  32 
+13:44:19: INFO Received:  KB 
+13:44:19: INFO Sent: D>On/Off                        |  32 
+13:44:19: INFO Sent: D>On/Off          Back          |  32 
+13:44:20: INFO Received:  KC 
+13:44:20: INFO Sent: D On/Off                        |  32 
+13:44:20: INFO Sent: D On/Off         >Back          |  32 
+13:44:23: INFO Received:  KC 
+13:44:23: INFO Sent: D>On/Off                        |  32 
+13:44:23: INFO Sent: D>On/Off          Back          |  32 
+13:44:24: INFO Received:  KB 
+13:44:24: INFO Sent: DShow password   set to Off     |  32 
+13:44:25: INFO Received:  KB 
+13:44:25: INFO Sent: DOn/Off Show password:          |  32 
+13:44:25: INFO Sent: D>On/Off                        |  32 
+13:44:25: INFO Sent: D>On/Off          Back          |  32 
+13:44:26: INFO Received:  KC 
+13:44:26: INFO Sent: D On/Off                        |  32 
+13:44:26: INFO Sent: D On/Off         >Back          |  32 
+13:44:27: INFO Received:  KB 
+13:44:27: INFO Sent: DBack Show password:            |  32 
+13:44:27: INFO Sent: D Calibrate                     |  32 
+13:44:27: INFO Sent: D Calibrate      >Show password |  32 
+13:44:27: INFO Received:  KC 
+13:44:27: INFO Sent: D>Exit                          |  32 
+13:44:28: INFO Received:  KC 
+13:44:28: INFO Sent: DSEMS Admin panel               |  32 
+13:44:28: INFO Sent: DSEMS Admin panel Password      |  32 
+13:44:30: INFO Received:  KC 
+13:44:30: INFO Sent: DSEMS Admin panel               |  32 
+13:44:30: INFO Sent: DSEMS Admin panel>Password      |  32 
+13:44:30: INFO Received:  KC 
+13:44:30: INFO Sent: D>Face Data                     |  32 
+13:44:30: INFO Sent: D>Face Data       Access Time   |  32 
+13:44:31: INFO Received:  KC 
+13:44:31: INFO Sent: D Face Data                     |  32 
+13:44:31: INFO Sent: D Face Data      >Access Time   |  32 
+13:44:31: INFO Received:  KC 
+13:44:31: INFO Sent: D>Speed                         |  32 
+13:44:32: INFO Sent: D>Speed           Open Time     |  32 
+13:44:32: INFO Received:  KC 
+13:44:32: INFO Sent: D Speed                         |  32 
+13:44:32: INFO Sent: D Speed          >Open Time     |  32 
+13:44:33: INFO Received:  KC 
+13:44:33: INFO Sent: D>Calibrate                     |  32 
+13:44:33: INFO Sent: D>Calibrate       Show password |  32 
+13:44:34: INFO Received:  KC 
+13:44:34: INFO Sent: D Calibrate                     |  32 
+13:44:34: INFO Sent: D Calibrate      >Show password |  32 
+13:44:35: INFO Received:  KC 
+13:44:35: INFO Sent: D>Exit                          |  32 
+13:44:36: INFO Received:  KB 
+13:44:36: INFO Sent: DSetting saved                  |  32 

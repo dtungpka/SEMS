@@ -1,0 +1,20 @@
+13:36:15: INFO Loading face data 
+13:36:15: INFO Face data loaded 
+13:36:15: INFO Loading config 
+13:36:15: INFO Config loaded 
+13:36:15: INFO Sending config to arduino 
+13:36:15: INFO Sent: A60000 
+13:36:15: INFO Sent: E52431.0 
+13:36:15: INFO Sent: T20000 
+13:36:15: INFO Sent: V600 
+13:36:15: INFO Config sent 
+13:36:55: INFO Loading face data 
+13:36:55: INFO Face data loaded 
+13:36:55: INFO Loading config 
+13:36:55: INFO Config loaded 
+13:36:55: INFO Sending config to arduino 
+13:36:55: INFO Sent: A60000 
+13:36:55: INFO Sent: E52431 
+13:36:55: INFO Sent: T20000 
+13:36:55: INFO Sent: V600 
+13:36:55: INFO Config sent 

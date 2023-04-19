@@ -1,0 +1,74 @@
+19:53:06: INFO Loading face data 
+19:53:06: INFO Face data loaded 
+19:53:06: INFO Loading config 
+19:53:06: INFO Config loaded 
+19:53:06: INFO Sending config to arduino 
+19:53:06: INFO Config sent 
+19:53:10: INFO Received:  V1000 
+19:53:14: INFO Received:  K0 
+19:53:14: INFO Received:  K3 
+19:53:15: INFO Received:  K0 
+19:53:15: INFO Received:  K1 
+19:53:15: INFO Received:  K0 
+19:53:16: INFO Received:  K1 
+19:53:16: INFO Received:  K1 
+19:53:17: INFO Received:  KC 
+19:53:18: INFO Received:  KC 
+19:53:19: INFO Received:  KC 
+19:53:19: INFO Received:  KC 
+19:53:19: INFO Received:  KC 
+19:53:20: INFO Received:  KC 
+19:53:20: INFO Received:  KC 
+19:53:21: INFO Received:  KA 
+19:53:21: INFO Received:  KA 
+19:53:22: INFO Received:  KA 
+19:53:23: INFO Received:  KB 
+19:53:24: INFO Received:  KB 
+19:53:28: INFO Received:  K9 
+19:53:28: INFO Received:  K0 
+19:53:28: INFO Received:  K0 
+19:53:28: INFO Received:  K0 
+19:53:30: INFO Received:  KD 
+19:53:30: INFO Received:  KD 
+19:53:30: INFO Received:  KD 
+19:53:30: INFO Received:  KD 
+19:53:31: INFO Received:  KD 
+19:53:31: INFO Received:  KD 
+19:53:32: INFO Received:  K9 
+19:53:32: INFO Received:  K0 
+19:53:34: INFO Received:  KB 
+19:53:34: INFO Sending config to arduino 
+19:53:34: INFO Config sent 
+19:53:34: INFO Received:  V1000 
+19:53:35: INFO Received:  KC 
+19:53:37: INFO Received:  KB 
+19:53:37: INFO Received:  KC 
+19:53:38: INFO Received:  KC 
+19:53:40: INFO Received:  KC 
+19:53:40: INFO Received:  KC 
+19:53:41: INFO Received:  KB 
+19:53:46: INFO Received:  K1 
+19:53:46: INFO Received:  K2 
+19:53:46: INFO Received:  K3 
+19:53:47: INFO Received:  K4 
+19:54:18: INFO Received:  K0 
+19:54:18: INFO Received:  K3 
+19:54:18: INFO Received:  K0 
+19:54:19: INFO Received:  K1 
+19:54:19: INFO Received:  K0 
+19:54:19: INFO Received:  K1 
+19:54:19: INFO Received:  K1 
+19:54:23: INFO Received:  KA 
+19:54:24: INFO Received:  KA 
+19:54:32: INFO Received:  KA 
+19:54:33: INFO Received:  KA 
+19:54:33: INFO Received:  KA 
+19:54:34: INFO Received:  KA 
+19:54:35: INFO Received:  KB 
+19:54:36: INFO Received:  KB 
+19:54:38: INFO Received:  KB 
+19:54:42: INFO New face added:Face_3 
+19:54:49: INFO Received:  KD 
+19:54:49: INFO No face detected 
+19:54:53: INFO No face detected 
+19:54:56: INFO No face detected 

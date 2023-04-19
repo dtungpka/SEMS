@@ -55,8 +55,14 @@ def evaluate(method):
     end = datetime.now()
     Console.Log(f"Method {method.__name__} took {round((end-start).total_seconds(),5)} seconds to execute")
     return (end-start).total_seconds()
-
-
+def save_setting():
+    with open('config.json', 'w') as f:
+        json.dump(data, f)
+def get_preloader(value):
+    value = max(min(99,100 - int(value) ),2)
+    DELAY_TIME = max((int(value) / 100 * 32.76) / 1000, 0.001);
+    preloader = 65535 - (16000000 * DELAY_TIME / 8)
+    return str(preloader)
 
 ports = list(serial.tools.list_ports.comports())
 if not ports:
@@ -85,7 +91,11 @@ class SerialCom():
         self.ser.write(msg.encode())
         self.ser.flush()
     def read(self):
-        return self.ser.readline().decode('ascii').rstrip()
+        try:
+            l = self.ser.readline().decode('ascii').rstrip()
+        except:
+            l = "_"
+        return l
     def close(self):
         self.ser.close()
 
@@ -126,13 +136,13 @@ COMMANDS = {
     'GET_CALIBRATING_VALUE':'S'
     }
 data = {
-    'CALIBRATING_VALUE':1000,
-    'ACCESS_TIME':60000,
-    'SPEED':57722,
-    'OPENTIME':60000,
+    'CALIBRATING_VALUE':'1000',
+    'ACCESS_TIME':'60000',
+    'SPEED':'50',
+    'OPENTIME':'60000',
     'PASSWORD':[ '1234'],
     'ADMIN_PASSWORD':'0301011',
-    'FACE_DATA':['ID1'], #id, encoding
+    'FACE_DATA':[], #id, encoding
     'SHOW_PASSWORD':False
     }
 
@@ -144,8 +154,8 @@ ADMIN_PANEL = {
     'Access Time':['Change','Back'],
     'Speed':['Change','Back'],
     'Open Time':['Change','Back'],
-    'Calibrate':['Run'],
-    'Show password':['On/Off'],
+    'Calibrate':['Start','Back'],
+    'Show password':['On/Off','Back'],
     'Exit':['Exit']
     }
 PANEL_COMMANDS = {
@@ -159,6 +169,7 @@ PANEL_COMMANDS = {
     }
 ser = SerialCom()
 lock = threading.Lock()
+face_rec = None
 def check_face_ids(detected:list):
     face_ids = []
     for face in data['FACE_DATA']:
@@ -235,7 +246,9 @@ class AdminPanel:
             if self.OoF == False and self.is_selects_panel:
                 self.render()
             return
-        if key == 'A':
+        if key != '*' and key != '#' and not self.is_selects_panel:
+            self.modify(key)
+        elif key == 'A':
             self.move_up()
         elif key == 'C':
             self.move_down()
@@ -243,25 +256,37 @@ class AdminPanel:
             self.select()
         elif key == 'D':
             self.back()
-        elif key != '*' and key != '#' and not self.is_selects_panel:
-            self.modify(key)
+        
     def select(self):
         if self.is_selects_panel:
             if self.keys[self.cursor] == 'Back':
                 self.back()
             if self.keys[self.cursor] == 'Exit':
                 self.exit()
-            elif type(self.panel) == dict:
-                self.subPanel = AdminPanel(self.panel[self.keys[self.cursor]],self.keys[self.cursor],self.ser)
-                self.subPanel.render()
-                self.OoF = True
-            elif type(self.panel) == list:
-                self.subPanel = AdminPanel(self.panel[self.cursor],self.parent,self.ser)
-                self.subPanel.render()
-                self.OoF = True
+            else:
+                #Need review
+                panel = self.panel[self.keys[self.cursor]] if type(self.panel) == dict else self.panel[self.cursor]
+                parent = self.keys[self.cursor] if type(self.panel) == dict else self.parent
+                if self.parent in PANEL_COMMANDS and (panel == 'Change' or panel == 'Delete'):
+                    global data
+                    index  = PANEL_COMMANDS[self.parent]
+                    if type(data[index]) == list:
+                        self.subPanel = AdminPanel(data[index],self.parent,self.ser,panel)
+                        self.subPanel.render()
+                        self.OoF = True
+                    else:
+                        v = data[index]
+                        self.subPanel = AdminPanel(v,self.parent,self.ser,self.panel[self.cursor])
+                        self.subPanel.render()
+                        self.OoF = True
+                else:
+                    self.subPanel = AdminPanel(panel,parent,self.ser,self.optional_action)
+                    self.subPanel.render()
+                    self.OoF = True
         else:
-            # self.subPanel = AdminPanel(self.value,self.parent,self.ser,self.panel)
+            
             pass
+
     def back(self):
         self.return_focus = True
     def move_up(self):
@@ -305,23 +330,88 @@ class AdminPanel:
         AdminPanel.authorized = False
         self.return_focus = True
     def modify(self,key=None):
-        global PANEL_COMMANDS,data
-        if self.panel == 'Delete':
-            self.value = 'Yes[B]/No[D]?'
-        if self.panel == 'Change' and self.value == '':
-            self.value = data[PANEL_COMMANDS[self.parent]]
-                
-        
+        global PANEL_COMMANDS,data,face_rec
+        custom_display = False
+        if key != None or self.optional_action or self.panel in  ['Start','On/Off']:
+            if key == 'D':
+                if len(self.value) > 0:
+                    self.value = self.value[:-1]
+                else:
+                    self.back()
+            if self.optional_action == 'Delete':
+                self.value = 'Yes[B]/No[D]?'
+                if key == 'B':
+                    index  = PANEL_COMMANDS[self.parent]
+                    if index == 'FACE_DATA':
+                        face_rec.remove_face_data(self.panel)
+                    else:
+                        data[index].remove(self.panel)
+                    self.back()
+                    save_setting()
+                elif key == 'D':
+                    self.back()
+            elif self.optional_action == 'Change' and self.value == '' and key == None:
+                self.value = self.panel
+            elif self.optional_action == 'Add' or self.panel == 'Add':
+                index  = PANEL_COMMANDS[self.parent]
+                if index == 'FACE_DATA':
+                    Recognition.take = True
+                    render_text = 'Taking picture..'
+                    self.ser.send(parse_command('DISPLAY_MESSAGE',render_text))
+                    while Recognition.take:
+                        pass
+                    custom_display = True
+                    render_text = 'New user saved.'
+                    save_setting()
+                    self.back()
+                elif key == 'B':
+                    data[index].append(self.value)
+                    Console.Log(self.parent,'Saved')
+                    self.back()
+                    save_setting()
+            elif self.panel == 'Start':
+                self.ser.send(parse_command('CALIBRATING'))
+                self.ser.send(parse_command('GET_CALIBRATING_VALUE'))
+                self.back()
+                save_setting()
+            elif self.panel == 'On/Off' and key == None:
+                index  = PANEL_COMMANDS[self.parent]
+                data[index] = not data[index]
+                render_text = f'{self.parent} \nset to {"On" if data[index] else "Off"}'
+                custom_display = True
+                save_setting()
+                self.back()
+            elif self.optional_action == 'Change' and key == 'B':
+                index  = PANEL_COMMANDS[self.parent]
+                if type(data[index]) == list:
+                    data[index][data[index].index(self.panel)] = self.value
+                else:
+                    data[index] = self.value
+                self.back()
+                Console.Log("Sending config to arduino")
+                self.ser.send(parse_command('SET_ACCESS_TIME',str(data['ACCESS_TIME'])))
+                self.ser.send(parse_command('SET_SPEED',str(get_preloader(data['SPEED']))))
+                self.ser.send(parse_command('SET_OPENTIME',str(data['OPENTIME'])))
+                self.ser.send(parse_command('SET_CALIBRATING_VALUE',str(data['CALIBRATING_VALUE'])))
+                Console.Log("Config sent")
+                save_setting()
+            
+            if key == '#':
+                self.back()
+            elif not key in ['A','B','C','D','*',] and key != None:
+                self.value += key
+
+
+
+
             
 
 
-
-            
-
-
-
-
-        render_text = f'{self.panel} {self.parent}:\n{self.value}'
+        if not custom_display:
+            if self.optional_action == None:
+                render_text = f'{self.panel} {self.parent}:\n{self.value}'
+            else:
+                render_text = f'{self.optional_action} {self.parent}:\n{self.value}'
         self.ser.send(parse_command('DISPLAY_MESSAGE',render_text))
         self.ser.send(parse_command('END'))
     def check_focus_scope(self):
@@ -332,8 +422,9 @@ class AdminPanel:
         
   
 def serial_handler():
+    global data
     password = Password()
-    admin_panel = AdminPanel(ADMIN_PANEL,"",ser)
+    admin_panel = None
     update_face = 0
     while True:
         msg = ser.read()
@@ -358,6 +449,7 @@ def serial_handler():
                     ser.send(parse_command('DISPLAY_MESSAGE','Access granted'))
                     ser.send(parse_command('END'))
                 if password.check_admin_password():
+                    admin_panel = AdminPanel(ADMIN_PANEL,"",ser)
                     AdminPanel.authorized = True
                     admin_panel.render()
                     #admin_panel.render_panel()
@@ -369,6 +461,7 @@ def serial_handler():
                 admin_panel.handle_key(value)
                 if AdminPanel.authorized == False:
                     ser.send(parse_command('DISPLAY_MESSAGE','Setting saved'))
+                    password.show_password = data['SHOW_PASSWORD']
                     password.clear_password()
                     time.sleep(2)
                     password.display_password()
@@ -389,6 +482,8 @@ def serial_handler():
                 update_face = 0
 
             ser.send(parse_command('END'))
+        if command == COMMANDS['SET_CALIBRATING_VALUE']:
+            data['SET_CALIBRATING_VALUE'] = value
         
 
 class Recognition:
@@ -456,7 +551,7 @@ class Recognition:
             #Console.Log("Faces: {}".format(Recognition.authorized))
             if Recognition.take:
                 self.save_new_face(frame)
-                Recognition.take = False
+                
             # Display the resulting image
             
 
@@ -482,6 +577,7 @@ class Recognition:
                 #save the frame 
                 cv2.imwrite(FACE_DIR+f"Face_{len(self.known_face_names)}.jpg",frame)
                 Console.Log("New face added:" + f"Face_{len(self.known_face_names)}" )
+                Recognition.take = False
             else:
                 Console.Log("No face detected")
     def remove_face_data(self,name):
@@ -489,6 +585,8 @@ class Recognition:
         #remove face data
         if name in self.known_face_names:
             index = self.known_face_names.index(name)
+            if len(self.known_face_encodings) -1 < index:
+                index = len(self.known_face_encodings) -1
             self.known_face_names.pop(index)
             self.known_face_encodings.pop(index)
             data['FACE_DATA'].pop(index)
@@ -501,7 +599,7 @@ class Recognition:
             Console.Log("Face data not found:" + name )
 
 def main():
-    global data
+    global data,face_rec
     
     #open camera 0 and start
     video_capture = cv2.VideoCapture(0)
@@ -529,7 +627,7 @@ def main():
     #send config to arduino
     Console.Log("Sending config to arduino")
     ser.send(parse_command('SET_ACCESS_TIME',str(data['ACCESS_TIME'])))
-    ser.send(parse_command('SET_SPEED',str(data['SPEED'])))
+    ser.send(parse_command('SET_SPEED',str(get_preloader(data['SPEED']))))
     ser.send(parse_command('SET_OPENTIME',str(data['OPENTIME'])))
     ser.send(parse_command('SET_CALIBRATING_VALUE',str(data['CALIBRATING_VALUE'])))
     ser.send(parse_command('END'))

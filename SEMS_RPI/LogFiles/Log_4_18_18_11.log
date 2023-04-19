@@ -1,0 +1,24 @@
+18:11:58: INFO Loading face data 
+18:11:58: INFO Face data loaded 
+18:11:58: INFO Loading config 
+18:11:58: INFO Config loaded 
+18:11:58: INFO Sending config to arduino 
+18:11:58: INFO Config sent 
+18:11:58: INFO Received:  V1000 
+18:12:01: INFO Received:  K0 
+18:12:01: INFO Received:  K3 
+18:12:01: INFO Received:  K0 
+18:12:02: INFO Received:  K1 
+18:12:02: INFO Received:  K0 
+18:12:02: INFO Received:  K1 
+18:12:03: INFO Received:  K1 
+18:12:04: INFO Received:  KC 
+18:12:05: INFO Received:  KB 
+18:12:11: INFO Received:  KB 
+18:12:14: INFO Received:  KD 
+18:13:24: INFO Received:  K* 
+18:13:25: INFO Received:  K* 
+18:13:30: INFO Received:  K* 
+18:13:31: INFO Received:  KD 
+18:13:34: INFO Received:  KD 
+18:13:42: INFO Received:  KD 

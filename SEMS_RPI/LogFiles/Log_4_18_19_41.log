@@ -1,0 +1,70 @@
+19:41:18: INFO Loading face data 
+19:41:18: INFO Face data loaded 
+19:41:18: INFO Loading config 
+19:41:18: INFO Config loaded 
+19:41:18: INFO Sending config to arduino 
+19:41:18: INFO Config sent 
+19:41:18: INFO Received:  V1000 
+19:41:22: INFO Received:  K4 
+19:41:23: INFO Received:  KC 
+19:41:23: INFO Received:  K4 
+19:41:26: INFO Received:  KD 
+19:41:26: INFO Received:  KD 
+19:41:26: INFO Received:  KD 
+19:41:27: INFO Received:  K0 
+19:41:27: INFO Received:  K3 
+19:41:27: INFO Received:  K0 
+19:41:28: INFO Received:  K1 
+19:41:28: INFO Received:  K0 
+19:41:28: INFO Received:  K1 
+19:41:29: INFO Received:  K1 
+19:41:31: INFO Received:  KC 
+19:41:32: INFO Received:  KB 
+19:41:33: INFO Received:  KB 
+19:41:33: INFO Received:  K1 
+19:41:34: INFO Received:  K1 
+19:41:34: INFO Received:  K1 
+19:41:35: INFO Received:  K1 
+19:41:35: INFO Received:  K1 
+19:41:36: INFO Received:  KB 
+19:41:36: INFO Password Saved 
+19:41:37: INFO Received:  KC 
+19:41:37: INFO Received:  KB 
+19:41:39: INFO Received:  KB 
+19:41:41: INFO Received:  K5 
+19:41:43: INFO Received:  K6 
+19:41:46: INFO Received:  KB 
+19:41:46: INFO Sending config to arduino 
+19:41:46: INFO Config sent 
+19:41:46: INFO Received:  V1000 
+19:41:48: INFO Received:  KC 
+19:41:48: INFO Received:  KC 
+19:41:48: INFO Received:  KC 
+19:41:49: INFO Received:  KC 
+19:41:49: INFO Received:  KC 
+19:41:49: INFO Received:  KC 
+19:41:50: INFO Received:  KC 
+19:41:51: INFO Received:  KD 
+19:41:52: INFO Received:  KC 
+19:41:53: INFO Received:  KC 
+19:41:55: INFO Received:  KB 
+19:41:56: INFO Received:  KC 
+19:42:00: INFO Received:  KB 
+19:42:02: INFO Received:  KB 
+19:42:13: INFO Received:  KB 
+19:42:14: INFO No face detected 
+19:42:18: INFO No face detected 
+19:42:22: INFO No face detected 
+19:42:26: INFO No face detected 
+19:42:30: INFO No face detected 
+19:42:35: INFO No face detected 
+19:42:38: INFO No face detected 
+19:42:43: INFO New face added:Face_3 
+19:42:52: INFO Received:  KD 
+19:42:53: INFO No face detected 
+19:42:57: INFO No face detected 
+19:43:01: INFO No face detected 
+19:43:05: INFO No face detected 
+19:43:09: INFO No face detected 
+19:43:13: INFO No face detected 
+19:43:18: INFO New face added:Face_5 

@@ -44,6 +44,7 @@ volatile bool calibrating = false;
 volatile unsigned long access_session_start_time = 0;
 const uint16_t serial_check_routine = 1;
 long last_serial_check_time = 0;
+long last_pressed = 0;
 
 const uint8_t STAGES[3][8] = {
 	//wave stages
@@ -351,10 +352,13 @@ void setup() {
 }
 
 void loop() {
-	char key = getKey();
-	if (key != 0) {
-		sendKey(key);
-		getCommand();
+	if (millis() - last_pressed > 50) {
+		char key = getKey();
+		if (key != 0) {
+			sendKey(key);
+			getCommand();
+		}
+		last_pressed = millis();
 	}
 
 	if (doorState == DOOR_OPEN && millis() - access_session_start_time > doorOpenTime) {

@@ -59,14 +59,15 @@ def save_setting():
     with open('config.json', 'w') as f:
         json.dump(data, f)
 def get_preloader(value):
-    value = max(min(99,100 - int(value) ),2)
+    value = max(min(95,100 - int(value) ),2)
     DELAY_TIME = max((int(value) / 100 * 32.76) / 1000, 0.001);
     preloader = 65535 - (16000000 * DELAY_TIME / 8)
     return str(preloader)
 
 ports = list(serial.tools.list_ports.comports())
 if not ports:
-    sys.exit("No serial ports available")
+    Console.Error("No serial ports available")
+    sys.exit()
 elif len(ports) == 1:
     PORT = ports[0].device
     print(f"Selected port: {PORT}")
@@ -81,6 +82,7 @@ class SerialCom():
     def __init__(self):
         self.ser = serial.Serial(PORT, 9600)
         self.ser.flushInput()
+        self.watch_dog_timer = 0
     def send(self, msg):
         #if msg is empty
         if not msg:
@@ -88,13 +90,26 @@ class SerialCom():
         #check if msg have \n or not, if not add it
         if msg[-1] != '\n':
             msg += '\n'
-        self.ser.write(msg.encode())
-        self.ser.flush()
+        while True:
+            
+            self.watch_dog_timer = time.time()
+            self.ser.write(msg.encode())
+            self.ser.flush()
+            if msg[0] == '_':
+                break
+            Console.Log("send: |",msg+'|')
+            r = self.read()
+            
+            if r[1:3] == msg[1:3].replace('\n',''):
+                break
+
     def read(self):
         try:
             l = self.ser.readline().decode('ascii').rstrip()
+            #Console.Log('Received: ',l)
         except:
             l = "_"
+
         return l
     def close(self):
         self.ser.close()
@@ -133,7 +148,8 @@ COMMANDS = {
     'SET_OPENTIME':'T',
     'CALIBRATING':'C',
     'SET_CALIBRATING_VALUE':'V',
-    'GET_CALIBRATING_VALUE':'S'
+    'GET_CALIBRATING_VALUE':'S',
+    'CHECK_PASSWORD':'X'
     }
 data = {
     'CALIBRATING_VALUE':'1000',
@@ -369,7 +385,7 @@ class AdminPanel:
                     Console.Log(self.parent,'Saved')
                     self.back()
                     save_setting()
-            elif self.panel == 'Start':
+            elif self.panel == 'Start' and key == None:
                 self.ser.send(parse_command('CALIBRATING'))
                 self.ser.send(parse_command('GET_CALIBRATING_VALUE'))
                 self.back()
@@ -396,16 +412,8 @@ class AdminPanel:
                 Console.Log("Config sent")
                 save_setting()
             
-            if key == '#':
-                self.back()
-            elif not key in ['A','B','C','D','*',] and key != None:
+            if not key in ['A','B','C','D','*'] and key != None:
                 self.value += key
-
-
-
-
-            
-
 
         if not custom_display:
             if self.optional_action == None:
@@ -532,7 +540,7 @@ class Recognition:
                 #     first_match_index = matches.index(True)
                 #     name = known_face_names[first_match_index]
                 if len(self.known_face_encodings) > 0:
-                    matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding,0.21)
+                    matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding,0.54)
                     # Or instead, use the known face with the smallest distance to the new face
                     face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
                     best_match_index = np.argmin(face_distances)
@@ -546,40 +554,32 @@ class Recognition:
                 cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
                 font = cv2.FONT_HERSHEY_DUPLEX
                 cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+                if Recognition.take:
+                    self.save_new_face(frame,face_encoding)
             Recognition.detected = len(face_locations)
             Recognition.authorized = [face for face in faces if face != 'Unknown']
             #Console.Log("Faces: {}".format(Recognition.authorized))
-            if Recognition.take:
-                self.save_new_face(frame)
+            
                 
             # Display the resulting image
             
 
-    def save_new_face(self,frame):
+    def save_new_face(self,frame,face_encoding):
         #save new face
         global lock,data
         if self.ret:
-            #resize frame
-            #convert to rgb
-            rgb_small_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            #get face location
-            face_locations = face_recognition.face_locations(rgb_small_frame)
-            #get face encoding
-            face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
-            if len(face_encodings) > 0:
-                self.known_face_encodings.append(face_encodings[0])
-                self.known_face_names.append(f"Face_{len(self.known_face_names)}")
-                data['FACE_DATA'].append(f"Face_{len(self.known_face_names)}")
+                name = f"Face_{len(self.known_face_names)}"
+                self.known_face_encodings.append(face_encoding)
+                self.known_face_names.append(name)
+                data['FACE_DATA'] = self.known_face_names
                 with open("config.json", 'w') as f:
                     json.dump(data,f)
                 with open(FACE_DIR+"face_data.pickle", 'wb') as f:
                     pickle.dump(self.known_face_encodings, f)
                 #save the frame 
-                cv2.imwrite(FACE_DIR+f"Face_{len(self.known_face_names)}.jpg",frame)
-                Console.Log("New face added:" + f"Face_{len(self.known_face_names)}" )
+                cv2.imwrite(FACE_DIR+f"{name}.jpg",frame)
+                Console.Log("New face added:" + f"{name}" )
                 Recognition.take = False
-            else:
-                Console.Log("No face detected")
     def remove_face_data(self,name):
         global data
         #remove face data

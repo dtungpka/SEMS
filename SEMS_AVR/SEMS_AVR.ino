@@ -72,6 +72,7 @@ enum Command {
 	CALIBRATING = 'C', // Close the door till button is pressed, then start counting step take to open the door (button is pressed again)
 	SET_CALIBRATING_VALUE = 'V', // set the value of door steps
 	GET_CALIBRATING_VALUE = 'S', // get the value of door steps
+	CHECK_DATA = 'X', // check if the data is correct
 };
 enum DoorState {
 	DOOR_OPEN = 'O',
@@ -238,6 +239,11 @@ cont:
 	value = tmp.substring(1);
 	if (command == 0) goto cont;
 	//Print back the received command and value
+	if ((int)command != END) {
+		Serial.print((char)CHECK_DATA);
+		Serial.println(value);
+	}
+
 #ifdef SERIAL_DEBUG
 	Serial.print("Command: ");
 	Serial.println(command);

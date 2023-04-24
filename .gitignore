@@ -1,0 +1,7 @@
+SEMS_AVR\.vs\
+SEMS_RPI\.vs\
+*.log
+*.vsidx
+*.ipch
+*.db
+SEMS_RPI/.vs/SEMS_RPI/v17/.suo

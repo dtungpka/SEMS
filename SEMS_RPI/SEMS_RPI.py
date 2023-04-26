@@ -6,8 +6,8 @@ import cv2
 import numpy as np
 import logging
 from datetime import datetime
-from time import sleep
-from collections import Counter
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 import os
 import json
 import pickle
@@ -505,25 +505,34 @@ class Recognition:
         self.face_encodings = []
         self.face_names = []
         self.process_frame = 2
-        self.video_capture = cv2.VideoCapture(0)
+
+        self.ret = True
     def run(self):
        current_frame = 0
+       camera = PiCamera()
+       camera.resolution = (640, 480)
+       camera.framerate = 32
+       rawCapture = PiRGBArray(camera, size=(640, 480))
+       
        while True:
+            time.sleep(0.1)
+            camera.capture(rawCapture, format="rgb")
+            frame = rawCapture.array
             # Grab a single frame of video
-            self.ret, frame = self.video_capture.read()
+            #self.ret, frame = self.video_capture.read()
 
             #Resize frame of video to 1/4 size for faster face recognition processing
-            small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+            rgb_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
             # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            #rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
             # Find all the faces and face enqcodings in the frame of video
             face_locations = face_recognition.face_locations(rgb_frame)
             if current_frame > 0:
                 current_frame -= 1
                 continue
-            current_frame = self.process_frame = 10
+            current_frame = self.process_frame
 
 
             face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
@@ -633,7 +642,7 @@ def main():
     ser.send(parse_command('END'))
     Console.Log("Config sent")
     #start serial handler
-    serial_handler_thread = threading.Thread(target=serial_handler)
+    serial_handler_thread = threading.Thread(target=serial_handler,daemon=True)
     serial_handler_thread.start()
     face_rec = Recognition(known_face_encodings,data['FACE_DATA'])
     face_rec.run()

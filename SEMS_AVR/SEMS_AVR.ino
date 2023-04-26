@@ -2,7 +2,7 @@
 
 //Project completion rate:
 // Arduino: 100%
-// RPI: 70%
+// RPI: 100%
 
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
@@ -174,9 +174,6 @@ void openDoor() {
 	if (doorStep == 0)
 		doorStep = doorHeight;
 	else doorStep = doorHeight - doorStep;
-	/*lcd.clear();
-	lcd.setCursor(0, 0);
-	lcd.print("Opening door...");*/
 }
 
 void closeDoor() {
@@ -185,9 +182,6 @@ void closeDoor() {
 	if (doorStep == 0)
 		doorStep = doorHeight;
 	else doorStep = doorHeight - doorStep;
-	/*lcd.clear();
-	lcd.setCursor(0, 0);
-	lcd.print("Closing door..");*/
 }
 int calibrate() {
 	calibrating = true;
@@ -220,7 +214,8 @@ int calibrate() {
 	lcd.setCursor(0, 1);
 	lcd.print("Steps: ");
 	lcd.print(doorHeight);
-	delay(5000);
+	unsigned long t = millis();
+	while (millis() - t < 5000);
 	lcd.clear();
 	return doorHeight;
 }
@@ -348,11 +343,13 @@ void setup() {
 	lcd.setCursor(0, 1);
 	lcd.print("Loading config..");
 	getCommand();
-	delay(100);
+	unsigned long t = millis();
+	while (millis() - t < 100);
 	lcd.clear();
 	lcd.home();
 	lcd.print("Init complete");
-	delay(1000);
+	unsigned long t = millis();
+	while (millis() - t < 1000);
 	lcd.clear();
 	//calibrate();
 }
